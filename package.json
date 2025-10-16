@@ -1,5 +1,6 @@
 {
 	"name": "mdjanai",
+	"version": "0.0.0",
 	"author": "eetann",
 	"description": "A CLI tool that convert text for Slack",
 	"license": "MIT",
@@ -50,9 +51,12 @@
 		"tsdown": "^0.15.6"
 	},
 	"peerDependencies": {
-		"typescript": "^5"
+		"typescript": "^5.9.3"
 	},
 	"dependencies": {
-		"gunshi": "^0.26.3"
+		"gunshi": "^0.26.3",
+		"remark-html": "^16.0.1",
+		"remark-parse": "^11.0.0",
+		"unified": "^11.0.5"
 	}
 }
