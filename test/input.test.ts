@@ -70,3 +70,24 @@ test("異常系_存在しないファイル", async () => {
 		expect(error).toBeDefined();
 	}
 });
+
+test("正常系_クリップボードからの入力", async () => {
+	// macOS環境でのみ実行
+	if (process.platform !== "darwin") {
+		return;
+	}
+
+	// クリップボードにテストデータを設定
+	const { execSync } = await import("node:child_process");
+	const testContent = "**clipboard test**";
+	execSync(`printf '%s' "${testContent}" | pbcopy`);
+
+	const ctx = {
+		values: {},
+		positionals: [],
+		_: [],
+	};
+
+	const result = await getInput(ctx);
+	expect(result).toBe(testContent);
+});

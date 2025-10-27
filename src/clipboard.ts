@@ -17,7 +17,10 @@ export async function copyToClipboard(
 	// macOS: osascriptでHTMLとプレーンテキストの両方をセット
 	// HTMLは16進数にエンコード
 	const htmlHex = Buffer.from(html, "utf-8").toString("hex");
-	const escapedText = plainText.replace(/"/g, '\\"').replace(/\n/g, "\\n");
+	const escapedText = plainText
+		.replace(/\\/g, "\\\\")
+		.replace(/"/g, '\\"')
+		.replace(/\n/g, "\\n");
 	const script = `set the clipboard to {«class HTML»:«data HTML${htmlHex}», string:"${escapedText}"}`;
 	await execFilePromise("osascript", ["-e", script]);
 }

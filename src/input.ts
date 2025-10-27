@@ -1,4 +1,8 @@
+import { execFile } from "node:child_process";
 import { readFile } from "node:fs/promises";
+import { promisify } from "node:util";
+
+const execFilePromise = promisify(execFile);
 
 interface Context {
 	values?: Record<string, unknown>;
@@ -19,5 +23,17 @@ export async function getInput(ctx: Context): Promise<string> {
 		return positionals.join(" ");
 	}
 
-	throw new Error("No input provided");
+	// クリップボードから読み込み（macOSのみ）
+	if (process.platform === "darwin") {
+		try {
+			const { stdout } = await execFilePromise("pbpaste", []);
+			return stdout;
+		} catch (_error) {
+			throw new Error("Failed to read from clipboard");
+		}
+	}
+
+	throw new Error(
+		"No input provided. Please provide input via file, argument, or clipboard.",
+	);
 }
