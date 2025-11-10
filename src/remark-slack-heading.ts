@@ -1,4 +1,4 @@
-import type { Heading, Root, Strong, Text } from "mdast";
+import type { Heading, Paragraph, Root, Strong, Text } from "mdast";
 import { toString as nodeToString } from "mdast-util-to-string";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
@@ -27,8 +27,14 @@ export const remarkSlackHeading: Plugin<[], Root> = () => {
 				],
 			};
 
-			// Replace the heading node with the strong node
-			parent.children[index] = strongNode;
+			// Wrap the strong node in a paragraph
+			const paragraphNode: Paragraph = {
+				type: "paragraph",
+				children: [strongNode],
+			};
+
+			// Replace the heading node with the paragraph node
+			parent.children[index] = paragraphNode;
 		});
 	};
 };

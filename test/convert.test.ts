@@ -42,49 +42,49 @@ test("エッジケース_特殊文字を含むMarkdown", async () => {
 test("converts h1 to strong element with # symbol preserved", async () => {
 	const markdown = "# foo";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong># foo</strong>\n");
+	expect(result).toBe("<p><strong># foo</strong></p>\n");
 });
 
 test("converts h2 to strong element with ## symbols preserved", async () => {
 	const markdown = "## bar";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong>## bar</strong>\n");
+	expect(result).toBe("<p><strong>## bar</strong></p>\n");
 });
 
 test("converts h3 to strong element with ### symbols preserved", async () => {
 	const markdown = "### baz";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong>### baz</strong>\n");
+	expect(result).toBe("<p><strong>### baz</strong></p>\n");
 });
 
 test("converts h4 to strong element with #### symbols preserved", async () => {
 	const markdown = "#### qux";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong>#### qux</strong>\n");
+	expect(result).toBe("<p><strong>#### qux</strong></p>\n");
 });
 
 test("converts h5 to strong element with ##### symbols preserved", async () => {
 	const markdown = "##### quux";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong>##### quux</strong>\n");
+	expect(result).toBe("<p><strong>##### quux</strong></p>\n");
 });
 
 test("converts h6 to strong element with ###### symbols preserved", async () => {
 	const markdown = "###### corge";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong>###### corge</strong>\n");
+	expect(result).toBe("<p><strong>###### corge</strong></p>\n");
 });
 
 test("converts empty heading to strong with # symbol only", async () => {
 	const markdown = "#";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong># </strong>\n");
+	expect(result).toBe("<p><strong># </strong></p>\n");
 });
 
 test("converts heading with multiple child nodes (e.g., # **foo**)", async () => {
 	const markdown = "# **bold** and *italic*";
 	const result = await convertMarkdownToHtml(markdown);
-	expect(result).toBe("<strong># bold and italic</strong>\n");
+	expect(result).toBe("<p><strong># bold and italic</strong></p>\n");
 });
 
 test("converts markdown with mixed elements including headings", async () => {
@@ -102,4 +102,24 @@ test("converts markdown with mixed elements including headings", async () => {
 	expect(result).toContain("<li>item1</li>");
 	expect(result).toContain("<li>item2</li>");
 	expect(result).toContain("<strong>bold text</strong>");
+});
+
+test("adds newline after heading followed by paragraph", async () => {
+	const markdown = "# foo\nbar";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<p><strong># foo</strong></p>\n<p>bar</p>\n");
+});
+
+test("adds newline after each consecutive heading", async () => {
+	const markdown = "# foo\n## bar";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe(
+		"<p><strong># foo</strong></p>\n<p><strong>## bar</strong></p>\n",
+	);
+});
+
+test("adds newline after heading at the end of document", async () => {
+	const markdown = "# foo";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<p><strong># foo</strong></p>\n");
 });

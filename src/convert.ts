@@ -7,8 +7,8 @@ import { remarkSlackHeading } from "./remark-slack-heading";
 export async function convertMarkdownToHtml(markdown: string): Promise<string> {
 	const result = await unified()
 		.use(remarkParse)
-		.use(remarkBreaks)
 		.use(remarkSlackHeading)
+		.use(remarkBreaks)
 		.use(remarkHtml)
 		.process(markdown);
 	return String(result);
