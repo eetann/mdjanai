@@ -38,3 +38,68 @@ test("エッジケース_特殊文字を含むMarkdown", async () => {
 	// >はエスケープされない場合もあるので、結果が含まれていることだけ確認
 	expect(result).toContain(">");
 });
+
+test("converts h1 to strong element with # symbol preserved", async () => {
+	const markdown = "# foo";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong># foo</strong>\n");
+});
+
+test("converts h2 to strong element with ## symbols preserved", async () => {
+	const markdown = "## bar";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong>## bar</strong>\n");
+});
+
+test("converts h3 to strong element with ### symbols preserved", async () => {
+	const markdown = "### baz";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong>### baz</strong>\n");
+});
+
+test("converts h4 to strong element with #### symbols preserved", async () => {
+	const markdown = "#### qux";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong>#### qux</strong>\n");
+});
+
+test("converts h5 to strong element with ##### symbols preserved", async () => {
+	const markdown = "##### quux";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong>##### quux</strong>\n");
+});
+
+test("converts h6 to strong element with ###### symbols preserved", async () => {
+	const markdown = "###### corge";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong>###### corge</strong>\n");
+});
+
+test("converts empty heading to strong with # symbol only", async () => {
+	const markdown = "#";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong># </strong>\n");
+});
+
+test("converts heading with multiple child nodes (e.g., # **foo**)", async () => {
+	const markdown = "# **bold** and *italic*";
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toBe("<strong># bold and italic</strong>\n");
+});
+
+test("converts markdown with mixed elements including headings", async () => {
+	const markdown = `# Title
+- item1
+- item2
+
+## Subtitle
+
+**bold text**`;
+	const result = await convertMarkdownToHtml(markdown);
+	expect(result).toContain("<strong># Title</strong>");
+	expect(result).toContain("<strong>## Subtitle</strong>");
+	expect(result).toContain("<ul>");
+	expect(result).toContain("<li>item1</li>");
+	expect(result).toContain("<li>item2</li>");
+	expect(result).toContain("<strong>bold text</strong>");
+});
