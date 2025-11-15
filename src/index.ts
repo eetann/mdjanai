@@ -20,13 +20,13 @@ await cli(
 		},
 		async run(ctx) {
 			try {
-				// 1. 入力取得
+				// 1. Get input
 				const input = await getInput(ctx);
 
-				// 2. Markdown → HTML変換
+				// 2. Convert Markdown to HTML
 				const html = await convertMarkdownToHtml(input);
 
-				// 3. クリップボードへコピー（エラーは警告のみ）
+				// 3. Copy to clipboard (errors are warnings only)
 				try {
 					await copyToClipboard(html, input);
 					console.error("✓ Copied to clipboard");
@@ -38,7 +38,7 @@ await cli(
 					console.error(`Warning: Failed to copy to clipboard: ${message}`);
 				}
 
-				// 4. 標準出力へ出力
+				// 4. Output to stdout
 				console.log(html);
 			} catch (error: unknown) {
 				const message = error instanceof Error ? error.message : String(error);

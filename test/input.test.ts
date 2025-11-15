@@ -2,11 +2,11 @@ import { expect, test } from "bun:test";
 import { unlinkSync, writeFileSync } from "node:fs";
 import { getInput } from "../src/input";
 
-test("正常系_ファイルからの入力", async () => {
+test("reads input from file", async () => {
 	const testFile = "/tmp/test-mdjanai-file.md";
 	const content = "# Test Content";
 
-	// テストファイルを作成
+	// Create test file
 	writeFileSync(testFile, content);
 
 	try {
@@ -18,12 +18,12 @@ test("正常系_ファイルからの入力", async () => {
 		const result = await getInput(ctx);
 		expect(result).toBe(content);
 	} finally {
-		// クリーンアップ
+		// Cleanup
 		unlinkSync(testFile);
 	}
 });
 
-test("正常系_位置引数からの入力", async () => {
+test("reads input from positional arguments", async () => {
 	const ctx = {
 		values: {},
 		positionals: ["**test**", "foo"],
@@ -33,28 +33,28 @@ test("正常系_位置引数からの入力", async () => {
 	expect(result).toBe("**test** foo");
 });
 
-test("優先順位_ファイルオプションが最優先", async () => {
+test("prioritizes file option over positional arguments", async () => {
 	const testFile = "/tmp/test-mdjanai-priority.md";
 	const fileContent = "# From File";
 
-	// テストファイルを作成
+	// Create test file
 	writeFileSync(testFile, fileContent);
 
 	try {
 		const ctx = {
 			values: { file: testFile },
-			positionals: ["**test**", "foo"], // 位置引数もあるが無視されるべき
+			positionals: ["**test**", "foo"], // Positional arguments exist but should be ignored
 			_: ["**test**", "foo"],
 		};
 		const result = await getInput(ctx);
-		expect(result).toBe(fileContent); // ファイルの内容が返される
+		expect(result).toBe(fileContent); // File content is returned
 	} finally {
-		// クリーンアップ
+		// Cleanup
 		unlinkSync(testFile);
 	}
 });
 
-test("異常系_存在しないファイル", async () => {
+test("throws error for non-existent file", async () => {
 	const ctx = {
 		values: { file: "/tmp/non-existent-file-mdjanai.md" },
 		positionals: [],
@@ -63,21 +63,21 @@ test("異常系_存在しないファイル", async () => {
 
 	try {
 		await getInput(ctx);
-		// エラーが投げられなかった場合はテスト失敗
+		// Fail if error was not thrown
 		expect(true).toBe(false);
 	} catch (error) {
-		// エラーが投げられることを期待
+		// Expect error to be thrown
 		expect(error).toBeDefined();
 	}
 });
 
-test("正常系_クリップボードからの入力", async () => {
-	// macOS環境でのみ実行
+test("reads input from clipboard", async () => {
+	// Run only on macOS environment
 	if (process.platform !== "darwin") {
 		return;
 	}
 
-	// クリップボードにテストデータを設定
+	// Set test data to clipboard
 	const { execSync } = await import("node:child_process");
 	const testContent = "**clipboard test**";
 	execSync(`printf '%s' "${testContent}" | pbcopy`);

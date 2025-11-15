@@ -11,19 +11,19 @@ interface Context {
 }
 
 export async function getInput(ctx: Context): Promise<string> {
-	// --file オプション指定時
+	// When --file option is specified
 	if (ctx.values?.file && typeof ctx.values.file === "string") {
 		const content = await readFile(ctx.values.file, "utf-8");
 		return content;
 	}
 
-	// 位置引数がある場合（positionals を優先、なければ _ を使用）
+	// When positional arguments exist (prioritize positionals, otherwise use _)
 	const positionals = ctx.positionals || ctx._;
 	if (positionals.length > 0) {
 		return positionals.join(" ");
 	}
 
-	// クリップボードから読み込み（macOSのみ）
+	// Read from clipboard (macOS only)
 	if (process.platform === "darwin") {
 		try {
 			const { stdout } = await execFilePromise("pbpaste", []);

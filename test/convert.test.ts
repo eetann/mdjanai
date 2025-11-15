@@ -1,13 +1,13 @@
 import { expect, test } from "bun:test";
 import { convertMarkdownToHtml } from "../src/convert";
 
-test("正常系_基本的なMarkdown要素の変換", async () => {
+test("converts basic Markdown elements", async () => {
 	const markdown = "**test**";
 	const result = await convertMarkdownToHtml(markdown);
 	expect(result).toContain("<strong>test</strong>");
 });
 
-test("正常系_リスト項目の変換", async () => {
+test("converts list items", async () => {
 	const markdown = "- item1\n- item2";
 	const result = await convertMarkdownToHtml(markdown);
 	expect(result).toContain("<ul>");
@@ -15,7 +15,7 @@ test("正常系_リスト項目の変換", async () => {
 	expect(result).toContain("<li>item2</li>");
 });
 
-test("正常系_コードブロックの変換", async () => {
+test("converts code blocks", async () => {
 	const markdown = "```\nconst x = 1;\n```";
 	const result = await convertMarkdownToHtml(markdown);
 	expect(result).toContain("<pre>");
@@ -23,19 +23,19 @@ test("正常系_コードブロックの変換", async () => {
 	expect(result).toContain("const x = 1;");
 });
 
-test("エッジケース_空文字列の変換", async () => {
+test("converts empty string", async () => {
 	const markdown = "";
 	const result = await convertMarkdownToHtml(markdown);
 	expect(result).toBe("");
 });
 
-test("エッジケース_特殊文字を含むMarkdown", async () => {
+test("converts Markdown with special characters", async () => {
 	const markdown = "< > & \" '";
 	const result = await convertMarkdownToHtml(markdown);
-	// HTMLエンティティ(数値文字参照)にエスケープされていることを確認
+	// Verify that HTML entities (numeric character references) are escaped
 	expect(result).toContain("&#x3C;"); // <
 	expect(result).toContain("&#x26;"); // &
-	// >はエスケープされない場合もあるので、結果が含まれていることだけ確認
+	// > may not be escaped in some cases, so just verify it's included in the result
 	expect(result).toContain(">");
 });
 

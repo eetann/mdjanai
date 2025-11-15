@@ -1,13 +1,13 @@
 import { expect, test } from "bun:test";
 import { copyToClipboard } from "../src/clipboard";
 
-test("モック_macOSでのクリップボード書き込み", async () => {
-	// プラットフォームチェックのため、実際のprocess.platformを確認
+test("writes to clipboard on macOS", async () => {
+	// Check actual process.platform for platform verification
 	if (process.platform !== "darwin") {
-		// macOS以外では未対応エラーが投げられることを確認
+		// Verify that unsupported platform error is thrown on non-macOS
 		try {
 			await copyToClipboard("<strong>test</strong>", "**test**");
-			expect(true).toBe(false); // エラーが投げられなかったら失敗
+			expect(true).toBe(false); // Fail if error was not thrown
 		} catch (error: unknown) {
 			expect(error instanceof Error).toBe(true);
 			if (error instanceof Error) {
@@ -15,8 +15,8 @@ test("モック_macOSでのクリップボード書き込み", async () => {
 			}
 		}
 	} else {
-		// macOSでは正常に実行されることを確認
-		// エラーが投げられなければ成功
+		// Verify successful execution on macOS
+		// Success if no error is thrown
 		await copyToClipboard("<strong>test</strong>", "**test**");
 		expect(true).toBe(true);
 	}
