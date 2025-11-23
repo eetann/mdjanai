@@ -47,6 +47,18 @@ await cli(
 				process.exit(1);
 			}
 		},
+		examples: `
+# From command-line arguments
+mdjanai "**Bold text**"
+
+mdjanai "# My Title
+**Bold text** and *italic text*"
+
+# from a file
+mdjanai --file path/to/your/document.md
+
+# From clipboard (macOS)
+mdjanai`,
 	},
 	{
 		version: pkg.version || "0.0.0",

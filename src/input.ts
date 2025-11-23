@@ -19,9 +19,10 @@ export async function getInput(ctx: Context): Promise<string> {
 	}
 
 	// When positional arguments exist (prioritize positionals, otherwise use _)
-	const positionals = ctx.rest.length > 0 ? ctx.rest : ctx.positionals || [];
-	if (positionals.length > 0) {
-		return positionals.join(" ");
+	const content =
+		ctx.rest.length > 0 ? ctx.rest.join(" ") : ctx.positionals.join(" ") || "";
+	if (content) {
+		return content;
 	}
 
 	// Read from clipboard (macOS only)
