@@ -12,6 +12,7 @@ test("reads input from file", async () => {
 	try {
 		const ctx = {
 			values: { file: testFile },
+			rest: [],
 			positionals: [],
 			_: [],
 		};
@@ -26,6 +27,7 @@ test("reads input from file", async () => {
 test("reads input from positional arguments", async () => {
 	const ctx = {
 		values: {},
+		rest: [],
 		positionals: ["**test**", "foo"],
 		_: ["**test**", "foo"],
 	};
@@ -43,6 +45,7 @@ test("prioritizes file option over positional arguments", async () => {
 	try {
 		const ctx = {
 			values: { file: testFile },
+			rest: [],
 			positionals: ["**test**", "foo"], // Positional arguments exist but should be ignored
 			_: ["**test**", "foo"],
 		};
@@ -57,6 +60,7 @@ test("prioritizes file option over positional arguments", async () => {
 test("throws error for non-existent file", async () => {
 	const ctx = {
 		values: { file: "/tmp/non-existent-file-mdjanai.md" },
+		rest: [],
 		positionals: [],
 		_: [],
 	};
@@ -84,6 +88,7 @@ test("reads input from clipboard", async () => {
 
 	const ctx = {
 		values: {},
+		rest: [],
 		positionals: [],
 		_: [],
 	};
