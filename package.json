@@ -1,6 +1,6 @@
 {
 	"name": "mdjanai",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "eetann",
 	"description": "A CLI tool that convert text for Slack",
 	"license": "MIT",
