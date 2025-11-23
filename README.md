@@ -35,7 +35,8 @@ mdjanai --file path/to/your/document.md
 ### From command-line arguments
 
 ```bash
-mdjanai "# My Title\n\n**Bold text** and *italic text*"
+mdjanai "# My Title
+**Bold text** and *italic text*"
 ```
 
 

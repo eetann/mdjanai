@@ -29,7 +29,7 @@ await cli(
 				// 3. Copy to clipboard (errors are warnings only)
 				try {
 					await copyToClipboard(html, input);
-					console.error("✓ Copied to clipboard");
+					console.log("✓ Copied to clipboard");
 				} catch (clipboardError: unknown) {
 					const message =
 						clipboardError instanceof Error
@@ -39,6 +39,7 @@ await cli(
 				}
 
 				// 4. Output to stdout
+				console.log("----------------------");
 				console.log(html);
 			} catch (error: unknown) {
 				const message = error instanceof Error ? error.message : String(error);
@@ -49,5 +50,6 @@ await cli(
 	},
 	{
 		version: pkg.version || "0.0.0",
+		renderHeader: null,
 	},
 );
