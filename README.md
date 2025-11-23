@@ -1,6 +1,6 @@
 # mdjanai
 
-A CLI tool that converts Markdown to Slack-compatible rich text format.
+A CLI tool that converts Markdown to Slack-compatible rich text format（`mrkdwn`）.
 
 ## Features
 
@@ -18,20 +18,6 @@ npm install -g mdjanai
 
 ## Usage
 
-### From clipboard (macOS)
-
-Simply run the command without arguments to automatically read from your clipboard:
-
-```bash
-mdjanai
-```
-
-### From a file
-
-```bash
-mdjanai --file path/to/your/document.md
-```
-
 ### From command-line arguments
 
 ```bash
@@ -40,8 +26,35 @@ mdjanai "# My Title
 ```
 
 
-The tool will:
-1. Convert your Markdown to Slack-compatible HTML
-2. Copy the result to your clipboard (macOS only)
-3. Print the converted HTML to stdout
+### From a file
 
+```bash
+mdjanai --file path/to/your/document.md
+```
+
+### From clipboard (macOS)
+
+Simply run the command without arguments to automatically read from your clipboard:
+
+```bash
+mdjanai
+```
+
+
+## Roadmap
+
+- [x] Heading
+- [x] Bulleted list
+- [x] Numbered list
+- [x] Checkbox
+- [ ] Text formatting
+    - [x] Bold
+    - [x] Italic
+    - [ ] Strikethrough
+    - [x] Inline code
+- [x] Link
+- [ ] Table
+- [x] Code block
+- [x] Quote
+- [ ] Callout
+- [x] Horizontal rule
