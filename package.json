@@ -1,6 +1,6 @@
 {
 	"name": "mdjanai",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "eetann",
 	"description": "A CLI tool that convert text for Slack",
 	"license": "MIT",
@@ -47,9 +47,9 @@
 		"@biomejs/biome": "2.2.5",
 		"@types/bun": "latest",
 		"@types/mdast": "^4.0.4",
-		"@typescript/native-preview": "^7.0.0-dev.20251006.1",
+		"@typescript/native-preview": "^7.0.0-dev.20251123.1",
 		"bumpp": "^10.3.1",
-		"tsdown": "^0.15.6"
+		"tsdown": "^0.15.12"
 	},
 	"peerDependencies": {
 		"typescript": "^5.9.3"

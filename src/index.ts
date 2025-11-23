@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { cli } from "gunshi";
 import * as pkg from "../package.json";
 import { copyToClipboard } from "./clipboard";

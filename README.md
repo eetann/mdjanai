@@ -1,3 +1,7 @@
+<p align="center">
+    <a href="https://www.npmjs.com/package/mdjanai"><img src="https://img.shields.io/npm/v/mdjanai?color=CB0200" alt="link to npm.js" /></a>
+</p>
+
 # mdjanai
 
 A CLI tool that converts Markdown to Slack-compatible rich text format（`mrkdwn`）.
