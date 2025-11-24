@@ -4,7 +4,9 @@
 
 # mdjanai
 
-A CLI tool that converts Markdown to Slack-compatible rich text format（`mrkdwn`）.
+A CLI tool that converts Markdown to Slack-compatible rich text format.
+
+![mdjanai before after](https://github.com/user-attachments/assets/11b01327-bf73-4fb7-9722-9e54e7b171b8)
 
 ## Features
 
